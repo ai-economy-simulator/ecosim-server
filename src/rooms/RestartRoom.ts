@@ -1,38 +1,14 @@
 import { Room, Client } from "@colyseus/core";
-import { RestartRoomState } from "./schema/RestartRoomState";
-
-const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-const NUMBERS = "0123456789";
+import { Player, RestartRoomState } from "./schema/RestartRoomState";
+import { generateRoomId } from "../services/roomID";
+import { RoomOnJoinOptionsData } from "../interfaces/room";
 
 export class RestartRoom extends Room<RestartRoomState> {
   maxClients = 8;
-
   LOBBY_CHANNEL = "$restartlobby";
 
-  generateRoomIdSingle(): string {
-    let result = "";
-    for (var i = 0; i < 2; i++) {
-      result += LETTERS.charAt(Math.floor(Math.random() * LETTERS.length));
-    }
-    for (var i = 0; i < 2; i++) {
-      result += NUMBERS.charAt(Math.floor(Math.random() * NUMBERS.length));
-    }
-    return result;
-  }
-  async generateRoomId(): Promise<string> {
-    const currentIds = await this.presence.smembers(this.LOBBY_CHANNEL);
-    let id;
-    do {
-      id = this.generateRoomIdSingle();
-    } while (currentIds.includes(id));
-
-    await this.presence.sadd(this.LOBBY_CHANNEL, id);
-    return id;
-  }
-
   async onCreate(options: any) {
-    this.roomId = await this.generateRoomId();
-
+    this.roomId = await generateRoomId(this.presence, this.LOBBY_CHANNEL);
     this.setState(new RestartRoomState());
 
     this.onMessage("type", (client, message) => {
@@ -42,8 +18,16 @@ export class RestartRoom extends Room<RestartRoomState> {
     });
   }
 
-  onJoin(client: Client, options: any) {
-    console.log(client.sessionId, "joined!");
+  onJoin(client: Client, options: RoomOnJoinOptionsData) {
+    console.log(client.sessionId, "joined room", this.roomId);
+    this.state.players.set(
+      client.sessionId,
+      new Player({
+        playerName: options.playerName,
+        avatar: options.avatar,
+        email: options.email,
+      }),
+    );
   }
 
   onLeave(client: Client, consented: boolean) {
