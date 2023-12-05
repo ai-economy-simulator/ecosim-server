@@ -9,6 +9,7 @@ export class RestartRoom extends Room<RestartRoomState> {
 
   async onCreate(options: any) {
     this.roomId = await generateRoomId(this.presence, this.LOBBY_CHANNEL);
+    this.autoDispose = false;
     this.setState(new RestartRoomState());
 
     this.onMessage("type", (client, message) => {
