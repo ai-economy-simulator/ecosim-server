@@ -31,7 +31,8 @@ export class RestartRoom extends Room<RestartRoomState> {
   }
 
   onLeave(client: Client, consented: boolean) {
-    console.log(client.sessionId, "left!");
+    console.log(client.sessionId, "left room", this.roomId);
+    this.state.players.delete(client.sessionId);
   }
 
   onDispose() {
