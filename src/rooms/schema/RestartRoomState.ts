@@ -3,6 +3,7 @@ import { Schema, Context, MapSchema, type } from "@colyseus/schema";
 export class Player extends Schema {
   @type("string") playerName: string | undefined;
   @type("string") avatar: string | undefined;
+  @type("boolean") isReady: boolean = false;
 
   email: string | undefined;
 
@@ -25,6 +26,8 @@ export class Player extends Schema {
 export class RestartRoomState extends Schema {
   // World states
   @type("float32") stockPrice: number = 100;
+  @type("string") activePlayer: string = null;
+  @type("boolean") isGameStarted: boolean = false;
 
   @type({ map: Player }) players = new MapSchema<Player>();
 }
