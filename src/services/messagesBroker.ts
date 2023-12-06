@@ -11,6 +11,7 @@ export const messageBroker = async (
 ) => {
   // check if room or client still exists when this code is run
 
+  // how to assert types for incoming messages?
   switch (type) {
     case MessageTypes.playerReady:
       changePlayerReadyStatus(room, client, message);

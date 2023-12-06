@@ -3,6 +3,6 @@ export enum MessageTypes {
   startGame = "startGame",
 }
 
-export interface playerReadyMessageData {
+export interface PlayerReadyMessageData {
   playerReady: boolean;
 }
