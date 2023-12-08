@@ -1,7 +1,10 @@
 import { Client } from "colyseus";
 import { RestartRoom } from "../rooms/RestartRoom";
 import { Player } from "../rooms/schema/RestartRoomState";
-import { PlayerReadyMessageData } from "../interfaces/messages";
+import {
+  PlayerReadyMessageData,
+  SetGameAdminMessageData,
+} from "../interfaces/messages";
 
 export const changePlayerReadyStatus = async (
   room: RestartRoom,
@@ -19,4 +22,13 @@ export const changePlayerReadyStatus = async (
       `Player ${client.sessionId} not found in room ${room.roomId} but sent a playerReady message`,
     );
   }
+};
+
+export const setGameAdmin = async (
+  room: RestartRoom,
+  client: Client,
+  message: SetGameAdminMessageData,
+) => {
+  // verify that this request is coming from legit source
+  room.state.gameAdmin = message.playerID;
 };

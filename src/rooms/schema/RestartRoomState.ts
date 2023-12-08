@@ -28,6 +28,7 @@ export class RestartRoomState extends Schema {
   @type("float32") stockPrice: number = 100;
   @type("string") activePlayer: string = null;
   @type("boolean") isGameStarted: boolean = false;
+  @type("string") gameAdmin: string = null;
 
   @type({ map: Player }) players = new MapSchema<Player>();
 }

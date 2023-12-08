@@ -1,6 +1,6 @@
 import { Client } from "colyseus";
 import { RestartRoom } from "../rooms/RestartRoom";
-import { changePlayerReadyStatus } from "./messagesHandler";
+import { changePlayerReadyStatus, setGameAdmin } from "./messagesHandler";
 import { MessageTypes } from "../interfaces/messages";
 
 export const messageBroker = async (
@@ -13,6 +13,9 @@ export const messageBroker = async (
 
   // how to assert types for incoming messages?
   switch (type) {
+    case MessageTypes.setGameAdmin:
+      setGameAdmin(room, client, message);
+      break;
     case MessageTypes.playerReady:
       changePlayerReadyStatus(room, client, message);
       break;
