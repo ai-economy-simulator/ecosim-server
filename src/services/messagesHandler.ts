@@ -4,6 +4,7 @@ import { Player } from "../rooms/schema/RestartRoomState";
 import {
   PlayerReadyMessageData,
   SetGameAdminMessageData,
+  StartGameMessageData,
 } from "../interfaces/messages";
 
 export const changePlayerReadyStatus = async (
@@ -31,4 +32,13 @@ export const setGameAdmin = async (
 ) => {
   // verify that this request is coming from legit source
   room.state.gameAdmin = message.playerID;
+};
+
+export const startGame = async (
+  room: RestartRoom,
+  client: Client,
+  message: StartGameMessageData,
+) => {
+  // verify that this request is coming from legit source
+  room.state.isGameStarted = message.startGame;
 };
