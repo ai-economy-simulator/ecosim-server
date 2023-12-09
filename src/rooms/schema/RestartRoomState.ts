@@ -4,6 +4,7 @@ export class Player extends Schema {
   @type("string") playerName: string | undefined;
   @type("string") avatar: string | undefined;
   @type("boolean") isReady: boolean = false;
+  @type("string") playerID: string;
 
   email: string | undefined;
 
@@ -11,15 +12,18 @@ export class Player extends Schema {
     playerName,
     avatar,
     email,
+    playerID,
   }: {
     playerName: string | undefined;
     avatar: string | undefined;
     email: string | undefined;
+    playerID: string;
   }) {
     super();
     this.playerName = playerName;
     this.avatar = avatar;
     this.email = email;
+    this.playerID = playerID;
   }
 }
 
