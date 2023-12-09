@@ -1,29 +1,27 @@
-# Welcome to Colyseus!
+# AI Economy Simulator
 
-This project has been created using [⚔️ `create-colyseus-app`](https://github.com/colyseus/create-colyseus-app/) - an npm init template for kick starting a Colyseus project in TypeScript.
+Game Server for the project.
 
-[Documentation](http://docs.colyseus.io/)
+## Development Setup
 
-## :crossed_swords: Usage
+1. Fork and Clone the repository locally.
 
-```
-npm start
-```
+1. Install `Node.js v20`, preferable using Node Version Manager (`nvm`). After installing `nvm`, you can run `nvm install --lts` to do that. Then, run `nvm use --lts` to switch to the correct version.
 
-## Structure
+1. Run `npm i` to install all the required dependencies.
 
-- `index.ts`: main entry point, register an empty room handler and attach [`@colyseus/monitor`](https://github.com/colyseus/colyseus-monitor)
-- `src/rooms/MyRoom.ts`: an empty room handler for you to implement your logic
-- `src/rooms/schema/MyRoomState.ts`: an empty schema used on your room's state.
-- `loadtest/example.ts`: scriptable client for the loadtest tool (see `npm run loadtest`)
-- `package.json`:
-    - `scripts`:
-        - `npm start`: runs `ts-node-dev index.ts`
-        - `npm test`: runs mocha test suite
-        - `npm run loadtest`: runs the [`@colyseus/loadtest`](https://github.com/colyseus/colyseus-loadtest/) tool for testing the connection, using the `loadtest/example.ts` script.
-- `tsconfig.json`: TypeScript configuration file
+1. Run `npm start`. Once the server starts, open localhost with the correct port in the browser. Most probably, it would be `http://localhost:2567`.
 
+1. Use `http://localhost:2567` for client playground and `http://localhost:2567/colyseus` for monitor.
 
-## License
+## Contributing Guidelines
 
-MIT
+1. Raise PRs only to the `main` branch.
+
+1. There is a pre-commit hook for `prettier`. Please honor it, and report a bug if it does not execute automatically.
+
+1. Resolve all merge conflicts unless states otherwise.
+
+## Special Credits
+
+This project has been created using [⚔️ `colyseus`](https://github.com/colyseus/colyseus) - Multiplayer Framework for Node.js

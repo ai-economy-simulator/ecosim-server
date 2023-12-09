@@ -30,6 +30,7 @@ export class RestartRoom extends Room<RestartRoomState> {
         playerName: options.playerName,
         avatar: options.avatar,
         email: options.email,
+        playerID: client.sessionId,
       }),
     );
   }
