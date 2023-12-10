@@ -42,6 +42,6 @@ export const startGame = async (
 ) => {
   // verify that this request is coming from legit source
   room.state.isGameStarted = message.startGame;
-  let iterator = room.state.players.keys();
-  playerChanceLoop(room, iterator);
+  room.state.playerChanceIterator = room.state.players.keys();
+  playerChanceLoop(room);
 };
