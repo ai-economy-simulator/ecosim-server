@@ -34,5 +34,10 @@ export class RestartRoomState extends Schema {
   @type("boolean") isGameStarted: boolean = false;
   @type("string") gameAdmin: string = null;
 
+  // Game Environment States
+  @type("int32") playerChanceLength: number = Number(
+    process.env.PLAYER_CHANCE_LENGTH,
+  );
+
   @type({ map: Player }) players = new MapSchema<Player>();
 }
