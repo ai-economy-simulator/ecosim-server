@@ -6,6 +6,7 @@ import {
   SetGameAdminMessageData,
   StartGameMessageData,
 } from "../interfaces/messages";
+import { advancePlayerChance } from "./playerChanceLoop";
 
 export const changePlayerReadyStatus = async (
   room: RestartRoom,
@@ -30,7 +31,7 @@ export const setGameAdmin = async (
   client: Client,
   message: SetGameAdminMessageData,
 ) => {
-  // verify that this request is coming from legit source
+  // verify that this request is coming from legit game admin
   room.state.gameAdmin = message.playerID;
 };
 
@@ -39,6 +40,18 @@ export const startGame = async (
   client: Client,
   message: StartGameMessageData,
 ) => {
-  // verify that this request is coming from legit source
+  // verify that this request is coming from legit game admin
   room.state.isGameStarted = message.startGame;
+  room.state.playerChanceIterator = room.state.players.keys();
+  advancePlayerChance(room);
+};
+
+export const endTurn = async (
+  room: RestartRoom,
+  client: Client,
+  message: SetGameAdminMessageData,
+) => {
+  // verify that this request is coming from the legit player
+  room.state.playerChanceTimer.clear();
+  advancePlayerChance(room);
 };

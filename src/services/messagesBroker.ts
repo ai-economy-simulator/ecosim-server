@@ -2,6 +2,7 @@ import { Client } from "colyseus";
 import { RestartRoom } from "../rooms/RestartRoom";
 import {
   changePlayerReadyStatus,
+  endTurn,
   setGameAdmin,
   startGame,
 } from "./messagesHandler";
@@ -25,6 +26,9 @@ export const messageBroker = async (
       break;
     case MessageTypes.startGame:
       startGame(room, client, message);
+      break;
+    case MessageTypes.endTurn:
+      endTurn(room, client, message);
       break;
     default:
       console.error(

@@ -1,4 +1,5 @@
 import { Schema, Context, MapSchema, type } from "@colyseus/schema";
+import { Delayed } from "colyseus";
 
 export class Player extends Schema {
   @type("string") playerName: string | undefined;
@@ -33,6 +34,13 @@ export class RestartRoomState extends Schema {
   @type("string") activePlayer: string = null;
   @type("boolean") isGameStarted: boolean = false;
   @type("string") gameAdmin: string = null;
+
+  // Game Environment States
+  @type("int32") playerChanceLength: number = Number(
+    process.env.PLAYER_CHANCE_LENGTH,
+  );
+  playerChanceTimer: Delayed;
+  playerChanceIterator: IterableIterator<string>;
 
   @type({ map: Player }) players = new MapSchema<Player>();
 }
