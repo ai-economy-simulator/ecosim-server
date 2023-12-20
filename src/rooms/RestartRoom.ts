@@ -3,6 +3,8 @@ import { Player, RestartRoomState } from "./schema/RestartRoomState";
 import { generateRoomId } from "../services/roomID";
 import { RoomOnJoinOptionsData } from "../interfaces/room";
 import { messageBroker } from "../services/messagesBroker";
+import { IncomingMessage } from "http";
+import { valdiateToken } from "../services/token";
 
 export class RestartRoom extends Room<RestartRoomState> {
   maxClients = 8;
@@ -10,6 +12,7 @@ export class RestartRoom extends Room<RestartRoomState> {
 
   async onCreate(options: any) {
     this.roomId = await generateRoomId(this.presence, this.LOBBY_CHANNEL);
+    console.log("Room created with ID: ", this.roomId);
     // Create logic to dispose rooms after a certain time if there is <= 1 connected client
     this.autoDispose = false;
     // make all these rooms private for added security
@@ -18,6 +21,16 @@ export class RestartRoom extends Room<RestartRoomState> {
     this.onMessage("*", (client, type, message) => {
       messageBroker(this, client, type as string, message);
     });
+  }
+
+  async onAuth(
+    client: Client,
+    options: RoomOnJoinOptionsData,
+    request: IncomingMessage,
+  ) {
+    // log IP address of client available in request object
+    console.log(`${options.email} attempting to join.`);
+    return await valdiateToken(options.accessToken);
   }
 
   onJoin(client: Client, options: RoomOnJoinOptionsData) {
