@@ -1,6 +1,6 @@
 # AI Economy Simulator
 
-Game Server for the project.
+Game Server and AI engine for the project.
 
 ## Development Setup
 
@@ -9,6 +9,18 @@ Game Server for the project.
 1. Install `Node.js v20`, preferable using Node Version Manager (`nvm`). After installing `nvm`, you can run `nvm install --lts` to do that. Then, run `nvm use --lts` to switch to the correct version.
 
 1. Run `npm i` to install all the required dependencies.
+
+1. Create a file `.env.development` in the root directory of the project with the following contents. Do get your own OpenAI API Key by creating an account of their platform https://help.openai.com/en/articles/4936850-where-do-i-find-my-api-key
+
+```
+PLAYER_CHANCE_LENGTH=5000
+
+OPENAI_API_KEY=<<Your API Key>>
+
+OPENAI_MODEL=gpt-3.5-turbo-1106
+OPENAI_RUN_POLLING_INTERVAL=500
+OPENAI_RUN_POLLING_TIMEOUT=5000
+```
 
 1. Run `npm start`. Once the server starts, open localhost with the correct port in the browser. Most probably, it would be `http://localhost:2567`.
 
