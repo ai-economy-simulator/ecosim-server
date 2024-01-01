@@ -1,5 +1,6 @@
 import { Schema, MapSchema, type, filter } from "@colyseus/schema";
 import { Client, Delayed } from "colyseus";
+import OpenAI from "openai";
 
 export class PlayerPrivate extends Schema {
   @type("string") email: string | undefined;
@@ -53,8 +54,14 @@ export class RestartRoomState extends Schema {
   @type("int32") playerChanceLength: number = Number(
     process.env.PLAYER_CHANCE_LENGTH,
   );
+
   playerChanceTimer: Delayed;
   playerChanceIterator: IterableIterator<string>;
 
+  // Players
   @type({ map: Player }) players = new MapSchema<Player>();
+
+  // AI Engine States
+  economyAssistant: OpenAI.Beta.Assistants.Assistant = null;
+  economyAssistantThread: OpenAI.Beta.Threads.Thread = null;
 }

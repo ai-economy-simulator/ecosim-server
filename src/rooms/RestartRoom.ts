@@ -5,6 +5,7 @@ import { RoomOnJoinOptionsData } from "../interfaces/room";
 import { messageBroker } from "../services/messagesBroker";
 import { IncomingMessage } from "http";
 import { valdiateToken } from "../services/token";
+import { initAIEngine, openai } from "../services/openai";
 
 export class RestartRoom extends Room<RestartRoomState> {
   maxClients = 8;
@@ -21,6 +22,9 @@ export class RestartRoom extends Room<RestartRoomState> {
     this.onMessage("*", (client, type, message) => {
       messageBroker(this, client, type as string, message);
     });
+
+    // Make this failsafe and handle errors here
+    initAIEngine(this);
   }
 
   async onAuth(
