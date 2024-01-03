@@ -22,7 +22,7 @@ export class RestartRoom extends Room<RestartRoomState> {
   private startDisposeTimer() {
     this.disposeTimer = setTimeout(() => {
       if (this.clients.length <= 1) {
-        this.disconnect(); // Disconnect clients and dispose if conditions are met
+        this.onDispose(); // Disconnect clients and dispose if conditions are met
       }
     }, 10 * 1000); // 10 seconds in milliseconds
   }
