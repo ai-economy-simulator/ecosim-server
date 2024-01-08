@@ -16,7 +16,12 @@ export class RestartRoom extends Room<RestartRoomState> {
     console.log("Room created with ID: ", this.roomId);
     // Create logic to dispose rooms after a certain time if there is <= 1 connected client
     this.autoDispose = false;
-    // make all these rooms private for added security
+    this.clock.setInterval(() => {
+      if (this.clients.length <= 1) {
+        this.disconnect(); // Disconnect clients and dispose if conditions are met
+      }
+    }, 60 * 1000); // 60 seconds in milliseconds
+
     this.setState(new RestartRoomState());
 
     this.onMessage("*", (client, type, message) => {
@@ -55,6 +60,12 @@ export class RestartRoom extends Room<RestartRoomState> {
   onLeave(client: Client, consented: boolean) {
     console.log(client.sessionId, "left room", this.roomId);
     this.state.players.delete(client.sessionId);
+
+    this.clock.setInterval(() => {
+      if (this.clients.length <= 1) {
+        this.disconnect(); // Disconnect clients and dispose if conditions are met
+      }
+    }, 10 * 1000); // 60 seconds in milliseconds
   }
 
   onDispose() {
